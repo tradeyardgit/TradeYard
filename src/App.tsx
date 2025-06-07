@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AuthHandler from './components/auth/AuthHandler';
 import PublicLayout from './components/layout/PublicLayout';
 import HomePage from './pages/HomePage';
 import CategoryPage from './pages/CategoryPage';
@@ -30,37 +31,39 @@ import SettingsPage from './pages/admin/SettingsPage';
 function App() {
   return (
     <Router>
-      <Routes>
-        {/* Admin Routes */}
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<DashboardPage />} />
-          <Route path="users" element={<UsersPage />} />
-          <Route path="listings" element={<ListingsPage />} />
-          <Route path="reports" element={<ReportsPage />} />
-          <Route path="settings" element={<SettingsPage />} />
-        </Route>
+      <AuthHandler>
+        <Routes>
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<DashboardPage />} />
+            <Route path="users" element={<UsersPage />} />
+            <Route path="listings" element={<ListingsPage />} />
+            <Route path="reports" element={<ReportsPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+          </Route>
 
-        {/* Public Routes */}
-        <Route element={<PublicLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="category/:categoryId" element={<CategoryPage />} />
-          <Route path="ads/:adId" element={<AdDetailPage />} />
-          <Route path="post-ad" element={<PostAdPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="contact" element={<ContactPage />} />
-          <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
-          <Route path="terms" element={<TermsPage />} />
-          <Route path="faqs" element={<FAQsPage />} />
-          <Route path="safety-tips" element={<SafetyTipsPage />} />
-          <Route path="favorites" element={<FavoritesPage />} />
-          <Route path="forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="featured" element={<FeaturedAdsListingPage />} />
-          <Route path="recent" element={<RecentAdsListingPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
+          {/* Public Routes */}
+          <Route element={<PublicLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path="category/:categoryId" element={<CategoryPage />} />
+            <Route path="ads/:adId" element={<AdDetailPage />} />
+            <Route path="post-ad" element={<PostAdPage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
+            <Route path="about" element={<AboutPage />} />
+            <Route path="contact" element={<ContactPage />} />
+            <Route path="privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="terms" element={<TermsPage />} />
+            <Route path="faqs" element={<FAQsPage />} />
+            <Route path="safety-tips" element={<SafetyTipsPage />} />
+            <Route path="favorites" element={<FavoritesPage />} />
+            <Route path="forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="featured" element={<FeaturedAdsListingPage />} />
+            <Route path="recent" element={<RecentAdsListingPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+        </Routes>
+      </AuthHandler>
     </Router>
   );
 }

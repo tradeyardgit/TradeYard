@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation, Outlet } from 'react-router-dom';
+import { Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   Users, 
@@ -8,9 +8,11 @@ import {
   Settings,
   LogOut
 } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
 
 const AdminLayout: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navigation = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
@@ -19,6 +21,17 @@ const AdminLayout: React.FC = () => {
     { name: 'Reports', href: '/admin/reports', icon: AlertTriangle },
     { name: 'Settings', href: '/admin/settings', icon: Settings },
   ];
+
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      navigate('/login');
+    } catch (error) {
+      console.error('Error signing out:', error);
+      // Even if signOut fails, redirect to login to clear the UI state
+      navigate('/login');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -57,7 +70,10 @@ const AdminLayout: React.FC = () => {
 
           {/* User Menu */}
           <div className="p-4 border-t border-gray-200">
-            <button className="flex items-center w-full px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors">
+            <button 
+              onClick={handleLogout}
+              className="flex items-center w-full px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+            >
               <LogOut className="w-5 h-5 mr-3" />
               Logout
             </button>
