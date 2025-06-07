@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React, { ButtonHTMLAttributes, ElementType } from 'react';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
 type ButtonSize = 'sm' | 'md' | 'lg';
@@ -10,6 +10,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   iconPosition?: 'left' | 'right';
   fullWidth?: boolean;
   loading?: boolean;
+  as?: ElementType;
+  to?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -20,6 +22,7 @@ const Button: React.FC<ButtonProps> = ({
   iconPosition = 'left',
   fullWidth = false,
   loading = false,
+  as: Component = 'button',
   className = '',
   ...props
 }) => {
@@ -43,16 +46,18 @@ const Button: React.FC<ButtonProps> = ({
   
   const loadingClasses = loading ? 'opacity-70 cursor-not-allowed' : '';
 
+  const combinedClassName = `
+    ${baseClasses}
+    ${variantClasses[variant]}
+    ${sizeClasses[size]}
+    ${widthClasses}
+    ${loadingClasses}
+    ${className}
+  `.trim();
+
   return (
-    <button
-      className={`
-        ${baseClasses}
-        ${variantClasses[variant]}
-        ${sizeClasses[size]}
-        ${widthClasses}
-        ${loadingClasses}
-        ${className}
-      `}
+    <Component
+      className={combinedClassName}
       disabled={loading || props.disabled}
       {...props}
     >
@@ -65,7 +70,7 @@ const Button: React.FC<ButtonProps> = ({
       {icon && iconPosition === 'left' && !loading && <span className="mr-2">{icon}</span>}
       {children}
       {icon && iconPosition === 'right' && <span className="ml-2">{icon}</span>}
-    </button>
+    </Component>
   );
 };
 

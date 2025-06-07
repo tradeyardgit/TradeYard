@@ -91,10 +91,15 @@ const Navbar: React.FC = () => {
               <span>Login</span>
             </Link>
             
-            <Link to="/register" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-white bg-primary-600 hover:bg-primary-700 transition-colors">
-              <UserPlus size={18} className="mr-1" />
-              <span>Register</span>
-            </Link>
+            <Button
+              variant="primary"
+              as={Link}
+              to="/register"
+              icon={<UserPlus size={18} />}
+              className="rounded-xl"
+            >
+              Register
+            </Button>
           </nav>
 
           {/* Mobile menu button */}
@@ -107,16 +112,16 @@ const Navbar: React.FC = () => {
               <Search size={24} />
             </button>
             
-            <Link to="/post-ad">
-              <Button 
-                variant="primary"
-                size="sm"
-                icon={<PlusCircle size={16} />}
-                className="rounded-xl"
-              >
-                Sell
-              </Button>
-            </Link>
+            <Button 
+              variant="primary"
+              size="sm"
+              icon={<PlusCircle size={16} />}
+              as={Link}
+              to="/post-ad"
+              className="rounded-xl"
+            >
+              Sell
+            </Button>
             
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
