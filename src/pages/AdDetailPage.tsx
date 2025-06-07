@@ -25,6 +25,7 @@ const AdDetailPage: React.FC = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isContactVisible, setIsContactVisible] = useState(false);
   const [similarAds, setSimilarAds] = useState<Ad[]>([]);
+  const [isFavorited, setIsFavorited] = useState(false);
 
   useEffect(() => {
     if (adId) {
@@ -43,6 +44,7 @@ const AdDetailPage: React.FC = () => {
     // Reset states when ad changes
     setActiveImageIndex(0);
     setIsContactVisible(false);
+    setIsFavorited(false);
     
     // Scroll to top
     window.scrollTo(0, 0);
@@ -79,6 +81,67 @@ const AdDetailPage: React.FC = () => {
 
   const toggleContact = () => {
     setIsContactVisible(!isContactVisible);
+  };
+
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsFavorited(!isFavorited);
+    
+    if (!isFavorited) {
+      alert('Added to favorites! ❤️');
+    } else {
+      alert('Removed from favorites');
+    }
+  };
+
+  const handleShareClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    const shareData = {
+      title: ad.title,
+      text: `Check out this ${ad.title} for ${formatCurrency(ad.price)}`,
+      url: window.location.href
+    };
+
+    try {
+      // Check if Web Share API is supported
+      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+        await navigator.share(shareData);
+      } else {
+        // Fallback: Copy to clipboard
+        await navigator.clipboard.writeText(window.location.href);
+        alert('Link copied to clipboard! 📋');
+      }
+    } catch (error) {
+      // If both Web Share API and clipboard fail, show the URL
+      alert(`Share this ad: ${window.location.href}`);
+    }
+  };
+
+  const handleReportClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    const reportReasons = [
+      'Scam or fraud',
+      'Inappropriate content',
+      'Misleading information',
+      'Duplicate listing',
+      'Other'
+    ];
+    
+    const reason = prompt(`Why are you reporting this ad?\n\nSelect a reason:\n${reportReasons.map((r, i) => `${i + 1}. ${r}`).join('\n')}\n\nEnter the number (1-5):`);
+    
+    if (reason && parseInt(reason) >= 1 && parseInt(reason) <= 5) {
+      const selectedReason = reportReasons[parseInt(reason) - 1];
+      alert(`Thank you for reporting this ad.\nReason: ${selectedReason}\n\nOur team will review this report within 24 hours.`);
+    } else if (reason !== null) {
+      alert('Invalid selection. Please try again.');
+    }
+  };
+
+  const handleChatClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    alert(`Starting chat with ${ad.seller.name}...\n\nThis feature will open a messaging interface where you can communicate directly with the seller about "${ad.title}".`);
   };
 
   return (
@@ -198,6 +261,7 @@ const AdDetailPage: React.FC = () => {
                   </Button>
                   
                   <Button
+                    onClick={handleChatClick}
                     variant="secondary"
                     size="lg"
                     icon={<MessageCircle size={18} />}
@@ -208,14 +272,16 @@ const AdDetailPage: React.FC = () => {
                   
                   <div className="flex gap-2 ml-auto">
                     <Button
+                      onClick={handleFavoriteClick}
                       variant="outline"
                       size="lg"
-                      icon={<Heart size={18} />}
+                      icon={<Heart size={18} className={isFavorited ? 'fill-red-500 text-red-500' : ''} />}
                       className="p-2"
                       aria-label="Add to favorites"
                     />
                     
                     <Button
+                      onClick={handleShareClick}
                       variant="outline"
                       size="lg"
                       icon={<Share2 size={18} />}
@@ -224,6 +290,7 @@ const AdDetailPage: React.FC = () => {
                     />
                     
                     <Button
+                      onClick={handleReportClick}
                       variant="outline"
                       size="lg"
                       icon={<Flag size={18} />}
@@ -341,6 +408,7 @@ const AdDetailPage: React.FC = () => {
                 
                 <div className="mt-4 pt-4 border-t border-gray-200">
                   <Button
+                    onClick={handleChatClick}
                     variant="outline"
                     fullWidth
                     icon={<MessageCircle size={18} />}
