@@ -24,7 +24,16 @@ const LoginPage: React.FC = () => {
       });
 
       if (signInError) {
-        throw signInError;
+        // Provide user-friendly error messages
+        if (signInError.message.includes('Invalid login credentials')) {
+          throw new Error('The email or password you entered is incorrect. Please check your credentials and try again.');
+        } else if (signInError.message.includes('Email not confirmed')) {
+          throw new Error('Please check your email and click the confirmation link before signing in.');
+        } else if (signInError.message.includes('Too many requests')) {
+          throw new Error('Too many login attempts. Please wait a few minutes before trying again.');
+        } else {
+          throw new Error(signInError.message);
+        }
       }
 
       if (data.user) {
