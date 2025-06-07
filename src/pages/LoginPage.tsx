@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, ArrowRight } from 'lucide-react';
+import { Mail, Lock, ArrowRight, AlertCircle } from 'lucide-react';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import { supabase } from '../lib/supabase';
@@ -52,6 +52,7 @@ const LoginPage: React.FC = () => {
         }
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError(err instanceof Error ? err.message : 'An error occurred during sign in');
     } finally {
       setIsLoading(false);
@@ -70,8 +71,12 @@ const LoginPage: React.FC = () => {
         
         <div className="bg-white py-8 px-4 shadow-sm rounded-lg sm:px-10 border border-gray-100">
           {error && (
-            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-md">
-              <p className="text-sm text-red-600">{error}</p>
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-3">
+              <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="text-sm font-medium text-red-800 mb-1">Sign In Failed</h3>
+                <p className="text-sm text-red-700">{error}</p>
+              </div>
             </div>
           )}
 
@@ -85,6 +90,7 @@ const LoginPage: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
+              className={error ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : ''}
             />
             
             <Input
@@ -96,6 +102,7 @@ const LoginPage: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
+              className={error ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : ''}
             />
             
             <div className="flex items-center justify-between">
