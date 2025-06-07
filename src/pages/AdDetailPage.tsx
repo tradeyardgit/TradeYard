@@ -141,7 +141,21 @@ const AdDetailPage: React.FC = () => {
 
   const handleChatClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    alert(`Starting chat with ${ad.seller.name}...\n\nThis feature will open a messaging interface where you can communicate directly with the seller about "${ad.title}".`);
+    
+    // Clean phone number (remove spaces, dashes, and country code formatting)
+    const cleanPhone = ad.seller.phone.replace(/[\s\-\+]/g, '').replace(/^234/, '');
+    
+    // Construct the WhatsApp message
+    const message = `Hi! I found your number on TradeYard and I'm interested in your listing: "${ad.title}". Is this item still available?\n\nItem Link: ${window.location.href}`;
+    
+    // Encode the message for URL
+    const encodedMessage = encodeURIComponent(message);
+    
+    // Construct WhatsApp URL
+    const whatsappUrl = `https://wa.me/234${cleanPhone}?text=${encodedMessage}`;
+    
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, '_blank');
   };
 
   return (
@@ -267,7 +281,7 @@ const AdDetailPage: React.FC = () => {
                     icon={<MessageCircle size={18} />}
                     className="sm:w-auto w-full"
                   >
-                    Chat with Seller
+                    Chat on WhatsApp
                   </Button>
                   
                   <div className="flex gap-2 ml-auto">
@@ -413,7 +427,7 @@ const AdDetailPage: React.FC = () => {
                     fullWidth
                     icon={<MessageCircle size={18} />}
                   >
-                    Chat with Seller
+                    Chat on WhatsApp
                   </Button>
                 </div>
               </div>
