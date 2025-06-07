@@ -156,27 +156,6 @@ const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div className="md:hidden animate-slide-up border-t border-gray-200 bg-white shadow-lg">
           <div className="px-4 pt-4 pb-6 space-y-4">
-            <div className="bg-gray-50 rounded-xl p-4">
-              <h3 className="font-medium text-gray-900 mb-3">Location</h3>
-              <div className="space-y-2 max-h-80 overflow-y-auto">
-                <button
-                  className="block w-full px-3 py-2.5 rounded-lg text-left font-medium text-gray-700 hover:bg-white transition-colors"
-                  onClick={() => handleLocationSelect('All Nigeria')}
-                >
-                  All Nigeria
-                </button>
-                {locations.map(loc => (
-                  <button
-                    key={loc.id}
-                    className="block w-full px-3 py-2.5 rounded-lg text-left font-medium text-gray-700 hover:bg-white transition-colors"
-                    onClick={() => handleLocationSelect(loc.name)}
-                  >
-                    {loc.name}, {loc.state}
-                  </button>
-                ))}
-              </div>
-            </div>
-            
             <div className="space-y-2">
               <Link
                 to="/favorites"
@@ -198,7 +177,7 @@ const Navbar: React.FC = () => {
               
               <Link
                 to="/register"
-                className="flex items-center px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-colors"
+                className="flex items-center px-4 py-3 rounded-xl bg-primary-600 text-white hover:bg-primary-700 transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <UserPlus size={20} className="mr-3" />
