@@ -247,7 +247,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile search bar */}
       {mobileSearchOpen && (
-        <div className="md:hidden border-t border-gray-200 animate-slide-up bg-white">
+        <div className="md:hidden border-t border-gray-200 bg-white">
           <div className="p-4">
             <form onSubmit={handleSearch} className="space-y-3">
               {/* Category Selector */}
@@ -323,7 +323,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden animate-slide-up border-t border-gray-200 bg-white shadow-lg">
+        <div className="md:hidden border-t border-gray-200 bg-white shadow-lg">
           <div className="px-4 pt-4 pb-6 space-y-4">
             <div className="space-y-2">
               <Link
