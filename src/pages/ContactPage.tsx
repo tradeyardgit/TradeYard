@@ -53,7 +53,7 @@ const ContactPage: React.FC = () => {
                     </div>
                     <div className="ml-3">
                       <p className="text-gray-900 font-medium">Phone</p>
-                      <p className="mt-1 text-gray-600">+234 812 345 6789</p>
+                      <p className="mt-1 text-gray-600">+2349066414474</p>
                     </div>
                   </div>
                   
@@ -63,7 +63,7 @@ const ContactPage: React.FC = () => {
                     </div>
                     <div className="ml-3">
                       <p className="text-gray-900 font-medium">Email</p>
-                      <p className="mt-1 text-gray-600">support@tradeyard.com</p>
+                      <p className="mt-1 text-gray-600">support@tradeyard.xyz</p>
                     </div>
                   </div>
                 </div>
