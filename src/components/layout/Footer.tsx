@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-bold mb-4">TradeYard</h3>
             <p className="text-gray-400 mb-4">
-              The #1 marketplace in Nigeria for buying and selling anything you can think of.
+              The marketplace in Nigeria for buying and selling anything you can think of.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -100,11 +100,11 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center">
                 <Smartphone size={18} className="text-gray-400 mr-2 flex-shrink-0" />
-                <span className="text-gray-400">+234 812 345 6789</span>
+                <span className="text-gray-400">+234 906 6641 4474</span>
               </li>
               <li className="flex items-center">
                 <Mail size={18} className="text-gray-400 mr-2 flex-shrink-0" />
-                <span className="text-gray-400">support@tradeyard.com</span>
+                <span className="text-gray-400">support@tradeyard.xyz</span>
               </li>
             </ul>
           </div>
