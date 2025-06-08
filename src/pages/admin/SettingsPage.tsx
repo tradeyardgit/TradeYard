@@ -37,7 +37,7 @@ const SettingsPage: React.FC = () => {
                 <Input
                   label="Support Email"
                   type="email"
-                  defaultValue="support@tradeyard.com"
+                  defaultValue="support@tradeyard.xyz"
                 />
                 
                 <Input
