@@ -152,7 +152,7 @@ const SafetyTipsPage: React.FC = () => {
                   <h3 className="font-semibold text-gray-900">Need Help?</h3>
                   <p className="mt-1 text-gray-600">
                     If you encounter any suspicious activity or need assistance, please contact our 
-                    support team immediately at support@tradeyard.com or call +234 812 345 6789.
+                    support team immediately at support@tradeyard.xyz or call +234 9066414474.
                   </p>
                 </div>
               </div>
