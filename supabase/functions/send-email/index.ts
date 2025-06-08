@@ -29,11 +29,11 @@ Deno.serve(async (req) => {
 
   try {
     // Get SMTP configuration from environment variables
-    const smtpHost = Deno.env.get('SMTP_HOST');
-    const smtpPort = parseInt(Deno.env.get('SMTP_PORT') || '465');
-    const smtpUsername = Deno.env.get('SMTP_USERNAME');
-    const smtpPassword = Deno.env.get('SMTP_PASSWORD');
-    const smtpFromEmail = Deno.env.get('SMTP_FROM_EMAIL');
+    const smtpHost = Deno.env.get('mail.myurl.ng');
+    const smtpPort = parseInt(Deno.env.get('465') || '465');
+    const smtpUsername = Deno.env.get('tradeyard@myurl.ng');
+    const smtpPassword = Deno.env.get('TNpc~sNvqPbV');
+    const smtpFromEmail = Deno.env.get('noreply@tradeyard.xyz');
 
     // Validate required environment variables
     if (!smtpHost || !smtpUsername || !smtpPassword || !smtpFromEmail) {
