@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Remove any global animations that might cause pages to load from bottom */
+* {
+  animation: none !important;
+}
+
+/* Only allow specific animations we want to keep */
+.animate-spin {
+  animation: spin 1s linear infinite !important;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out !important;
+}
+
+/* Remove slide-up animation completely */
+@keyframes slideUp {
+  /* Empty keyframes to disable */
+}
+
+.animate-slide-up {
+  animation: none !important;
+}
