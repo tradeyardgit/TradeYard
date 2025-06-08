@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ScrollToTop from './components/utils/ScrollToTop';
 import AuthHandler from './components/auth/AuthHandler';
 import PublicLayout from './components/layout/PublicLayout';
 import HomePage from './pages/HomePage';
@@ -31,6 +32,7 @@ import SettingsPage from './pages/admin/SettingsPage';
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <AuthHandler>
         <Routes>
           {/* Admin Routes */}
