@@ -91,6 +91,17 @@ const PostAdPage: React.FC = () => {
     setAiError(null);
 
     try {
+      // Check if user is authenticated before uploading
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      
+      if (authError || !user) {
+        setErrors(prev => ({ 
+          ...prev, 
+          images: 'You must be logged in to upload images. Please log in and try again.' 
+        }));
+        return;
+      }
+
       const uploadedUrls: string[] = [];
 
       for (let i = 0; i < files.length; i++) {
