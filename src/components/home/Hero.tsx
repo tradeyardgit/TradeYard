@@ -1,10 +1,12 @@
 import React from 'react';
-import { Search, MapPin } from 'lucide-react';
+import { Search, MapPin, Sparkles, Upload, Camera } from 'lucide-react';
 import { categories } from '../../data/categories';
 import { locations } from '../../data/locations';
 import FeaturedAds from '../home/FeaturedAds';
 import { mockAds } from '../../data/mockAds';
 import AdCard from '../ui/AdCard';
+import { Link } from 'react-router-dom';
+import Button from '../ui/Button';
 
 const Hero: React.FC = () => {
   const featuredAds = mockAds.filter(ad => ad.featured).slice(0, 6);
@@ -22,6 +24,51 @@ const Hero: React.FC = () => {
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-primary-100">
             Post Ads for FREE!
           </h1>
+          
+          <p className="text-xl sm:text-2xl text-primary-100 mb-8">
+            Upload a photo and let AI create your perfect listing
+          </p>
+
+          {/* AI-Powered CTA */}
+          <div className="mb-12">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/20">
+              <div className="flex items-center justify-center mb-4">
+                <div className="bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-full mr-4">
+                  <Sparkles className="w-8 h-8 text-white" />
+                </div>
+                <div className="text-left">
+                  <h3 className="text-xl font-semibold text-white">AI-Powered Listings</h3>
+                  <p className="text-primary-100">Upload a photo, get instant suggestions</p>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-primary-100 mb-6">
+                <div className="flex items-center">
+                  <Camera className="w-5 h-5 mr-2" />
+                  <span>Smart photo analysis</span>
+                </div>
+                <div className="flex items-center">
+                  <Upload className="w-5 h-5 mr-2" />
+                  <span>Auto-generated titles</span>
+                </div>
+                <div className="flex items-center">
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  <span>Optimized descriptions</span>
+                </div>
+              </div>
+              
+              <Button
+                as={Link}
+                to="/post-ad"
+                variant="primary"
+                size="lg"
+                className="bg-white text-primary-600 hover:bg-primary-50 font-semibold px-8 py-3 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200"
+                icon={<Sparkles size={20} />}
+              >
+                Try AI Listing Now
+              </Button>
+            </div>
+          </div>
 
           {/* Featured Ads Section */}
           {featuredAds.length > 0 && (

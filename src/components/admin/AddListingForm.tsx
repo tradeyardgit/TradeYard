@@ -6,6 +6,7 @@ import { categories } from '../../data/categories';
 import { locations } from '../../data/locations';
 import { Upload, X, Sparkles, Loader2 } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
+import { useAIProductAnalysis } from '../../hooks/useAIProductAnalysis';
 
 interface AddListingFormProps {
   onSuccess: () => void;
@@ -13,25 +14,12 @@ interface AddListingFormProps {
   initialData?: any;
 }
 
-interface AIAnalysisResult {
-  title: string;
-  category: string;
-  subcategory: string;
-  condition: string;
-  tags: string[];
-  description: string;
-  confidence: number;
-}
-
 const AddListingForm: React.FC<AddListingFormProps> = ({ onSuccess, onCancel, initialData }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [images, setImages] = useState<string[]>(initialData?.images || []);
   const [selectedCategory, setSelectedCategory] = useState(initialData?.category || '');
   const [subcategories, setSubcategories] = useState<string[]>([]);
-  const [aiSuggestions, setAiSuggestions] = useState<AIAnalysisResult | null>(null);
-  const [showAiSuggestions, setShowAiSuggestions] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [formData, setFormData] = useState({
@@ -44,6 +32,22 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ onSuccess, onCancel, in
     condition: initialData?.condition || '',
     negotiable: initialData?.negotiable || false,
     featured: initialData?.featured || false
+  });
+
+  // Use the AI analysis hook
+  const {
+    isAnalyzing,
+    aiSuggestions,
+    showAiSuggestions,
+    error: aiError,
+    analyzeImageWithAI,
+    applyAISuggestions,
+    dismissAISuggestions
+  } = useAIProductAnalysis({
+    formData,
+    setFormData,
+    setSelectedCategory,
+    setSubcategories
   });
 
   // Initialize subcategories when component mounts or category changes
@@ -69,73 +73,6 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ onSuccess, onCancel, in
       // Reset subcategory when category changes
       setFormData(prev => ({ ...prev, subcategory: '' }));
     }
-  };
-
-  const analyzeImageWithAI = async (imageUrl: string) => {
-    setIsAnalyzing(true);
-    setError(null);
-
-    try {
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/analyze-image`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ imageUrl }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to analyze image');
-      }
-
-      const result = await response.json();
-      
-      if (result.success && result.data) {
-        setAiSuggestions(result.data);
-        setShowAiSuggestions(true);
-      } else {
-        throw new Error('Invalid response from AI service');
-      }
-    } catch (err) {
-      console.error('AI analysis error:', err);
-      setError(`AI analysis failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
-
-  const applyAISuggestions = () => {
-    if (!aiSuggestions) return;
-
-    // Find the category ID that matches the AI suggestion
-    const matchedCategory = categories.find(cat => 
-      cat.id === aiSuggestions.category || 
-      cat.name.toLowerCase() === aiSuggestions.category.toLowerCase()
-    );
-
-    if (matchedCategory) {
-      setFormData(prev => ({
-        ...prev,
-        title: aiSuggestions.title,
-        description: aiSuggestions.description,
-        category: matchedCategory.id,
-        subcategory: aiSuggestions.subcategory,
-        condition: aiSuggestions.condition
-      }));
-
-      setSelectedCategory(matchedCategory.id);
-      setSubcategories(matchedCategory.subcategories || []);
-    }
-
-    setShowAiSuggestions(false);
-    setAiSuggestions(null);
-  };
-
-  const dismissAISuggestions = () => {
-    setShowAiSuggestions(false);
-    setAiSuggestions(null);
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -269,6 +206,12 @@ const AddListingForm: React.FC<AddListingFormProps> = ({ onSuccess, onCancel, in
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
           {error}
+        </div>
+      )}
+
+      {aiError && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
+          {aiError}
         </div>
       )}
 
