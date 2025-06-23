@@ -636,7 +636,7 @@ const PostAdPage: React.FC = () => {
               </div>
               <div className="ml-3 text-sm">
                 <label htmlFor="terms" className="text-gray-600">
-                  I agree to the <Link to="/terms" className="text-primary-600 hover:text-primary-500">Terms and Conditions</Link> and <Link to="/privacy-policy" className="text-primary-600 hover:text-primary-500">Privacy Policy</Link>
+                  I agree to the <Link to="/terms" className="text-primary-600 hover:text-primary-500">Terms and Conditions</Link> and <Link to="/privacy-policy" className=\"text-primary-600 hover:text-primary-500">Privacy Policy</Link>
                 </label>
               </div>
             </div>
