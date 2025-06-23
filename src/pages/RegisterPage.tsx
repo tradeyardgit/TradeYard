@@ -19,6 +19,7 @@ const RegisterPage: React.FC = () => {
     confirmPassword: ''
   });
   
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -38,32 +39,30 @@ const RegisterPage: React.FC = () => {
   };
 
   const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    
     if (!formData.name.trim()) {
-      setError('Name is required');
-      return false;
+      newErrors.name = 'Name is required';
     }
     
     if (!formData.email.trim() || !/\S+@\S+\.\S+/.test(formData.email)) {
-      setError('Valid email is required');
-      return false;
+      newErrors.email = 'Valid email is required';
     }
     
     if (!formData.phone.trim()) {
-      setError('Phone number is required');
-      return false;
+      newErrors.phone = 'Phone number is required';
     }
     
     if (!formData.password || formData.password.length < 6) {
-      setError('Password must be at least 6 characters');
-      return false;
+      newErrors.password = 'Password must be at least 6 characters';
     }
     
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      return false;
+      newErrors.confirmPassword = 'Passwords do not match';
     }
 
-    return true;
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -148,6 +147,7 @@ const RegisterPage: React.FC = () => {
               value={formData.name}
               onChange={handleChange}
               placeholder="John Doe"
+              error={errors.name}
             />
             
             <Input
@@ -160,6 +160,7 @@ const RegisterPage: React.FC = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="your@email.com"
+              error={errors.email}
             />
             
             <Input
@@ -172,6 +173,7 @@ const RegisterPage: React.FC = () => {
               value={formData.phone}
               onChange={handleChange}
               placeholder="+234 800 000 0000"
+              error={errors.phone}
             />
             
             <div>
@@ -185,7 +187,9 @@ const RegisterPage: React.FC = () => {
                 <select
                   id="location"
                   name="location"
-                  className="pl-10 block w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent"
+                  className={`pl-10 block w-full py-2 px-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent ${
+                    errors.location ? 'border-red-300' : 'border-gray-300'
+                  }`}
                   value={formData.location}
                   onChange={handleChange}
                   required
@@ -198,6 +202,9 @@ const RegisterPage: React.FC = () => {
                   ))}
                 </select>
               </div>
+              {errors.location && (
+                <p className="mt-1 text-sm text-red-600">{errors.location}</p>
+              )}
             </div>
             
             <Input
@@ -210,6 +217,7 @@ const RegisterPage: React.FC = () => {
               value={formData.password}
               onChange={handleChange}
               placeholder="••••••••"
+              error={errors.password}
             />
             
             <Input
@@ -222,6 +230,7 @@ const RegisterPage: React.FC = () => {
               value={formData.confirmPassword}
               onChange={handleChange}
               placeholder="••••••••"
+              error={errors.confirmPassword}
             />
             
             <div className="flex items-start">
