@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 220 15% 18%;
+    --primary: 220 90% 56%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 33% 45%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 34 97% 52%;
+    --accent-foreground: 220 15% 18%;
+    --muted: 220 14% 80%;
+    --muted-foreground: 220 8% 45%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 18%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 14% 90%;
+    --input: 220 14% 90%;
+    --ring: 220 90% 56%;
+    --radius: 0.5rem;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
 /* Remove any global animations that might cause pages to load from bottom */
 * {
   animation: none !important;

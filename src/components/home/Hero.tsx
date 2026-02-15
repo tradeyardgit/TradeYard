@@ -1,8 +1,5 @@
 import React from 'react';
-import { Search, MapPin, Sparkles, Upload, Camera } from 'lucide-react';
-import { categories } from '../../data/categories';
-import { locations } from '../../data/locations';
-import FeaturedAds from '../home/FeaturedAds';
+import { ArrowRight, TrendingUp, Users, Shield } from 'lucide-react';
 import { mockAds } from '../../data/mockAds';
 import AdCard from '../ui/AdCard';
 import { Link } from 'react-router-dom';
@@ -12,81 +9,155 @@ const Hero: React.FC = () => {
   const featuredAds = mockAds.filter(ad => ad.featured).slice(0, 6);
 
   return (
-    <div className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 text-white overflow-hidden">
-      {/* Animated background pattern */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[linear-gradient(30deg,rgba(255,255,255,0.1)_12%,transparent_12.5%,transparent_87%,rgba(255,255,255,0.1)_87.5%,rgba(255,255,255,0.1))] bg-[length:20px_35px] opacity-20 animate-[slide_20s_linear_infinite]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,rgba(255,255,255,0.1),transparent)]"></div>
+    <div>
+      {/* Hero Section */}
+      <div className="relative overflow-hidden bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 py-20 lg:py-32 px-4 sm:px-6 lg:px-8">
+            {/* Left Content */}
+            <div className="flex flex-col justify-center">
+              <h1 className="text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+                Buy and Sell Anything
+              </h1>
+              
+              <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+                Join thousands of buyers and sellers on Nigeria's most trusted marketplace. Find great deals or sell your items instantly.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                <Button
+                  as={Link}
+                  to="/post-ad"
+                  variant="primary"
+                  size="lg"
+                  className="font-semibold flex items-center justify-center"
+                >
+                  Start Selling
+                  <ArrowRight size={20} className="ml-2" />
+                </Button>
+                
+                <Button
+                  as={Link}
+                  to="/category/electronics"
+                  variant="secondary"
+                  size="lg"
+                  className="font-semibold"
+                >
+                  Browse Listings
+                </Button>
+              </div>
+
+              {/* Trust Indicators */}
+              <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border">
+                <div>
+                  <div className="text-2xl font-bold text-primary mb-1">50K+</div>
+                  <p className="text-sm text-muted-foreground">Active Listings</p>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-primary mb-1">10K+</div>
+                  <p className="text-sm text-muted-foreground">Happy Sellers</p>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-primary mb-1">100%</div>
+                  <p className="text-sm text-muted-foreground">Secure</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right - Featured Grid */}
+            <div className="grid grid-cols-2 gap-4 auto-rows-max">
+              {featuredAds.slice(0, 4).map((ad, idx) => (
+                <div 
+                  key={ad.id}
+                  className={idx === 0 ? 'col-span-1 row-span-2' : 'col-span-1'}
+                >
+                  <div className="h-full rounded-lg overflow-hidden border border-border hover:shadow-lg transition-shadow">
+                    <AdCard ad={ad} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-32 relative z-10">
-        <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-primary-100">
-            Post Ads for FREE!
-          </h1>
-          
-          <p className="text-xl sm:text-2xl text-primary-100 mb-8">
-            Upload a photo and let AI create your perfect listing
-          </p>
+      {/* Features Section */}
+      <div className="bg-muted/30 py-16 lg:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Why Choose TradeYard?
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Everything you need for seamless buying and selling experience
+            </p>
+          </div>
 
-          {/* AI-Powered CTA */}
-          <div className="mb-12">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-6 border border-white/20">
-              <div className="flex items-center justify-center mb-4">
-                <div className="bg-gradient-to-r from-purple-500 to-blue-500 p-3 rounded-full mr-4">
-                  <Sparkles className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-left">
-                  <h3 className="text-xl font-semibold text-white">AI-Powered Listings</h3>
-                  <p className="text-primary-100">Upload a photo, get instant suggestions</p>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Feature 1 */}
+            <div className="bg-card rounded-xl p-8 border border-border hover:shadow-lg transition-shadow">
+              <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                <TrendingUp className="w-7 h-7 text-primary" />
               </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-primary-100 mb-6">
-                <div className="flex items-center">
-                  <Camera className="w-5 h-5 mr-2" />
-                  <span>Smart photo analysis</span>
-                </div>
-                <div className="flex items-center">
-                  <Upload className="w-5 h-5 mr-2" />
-                  <span>Auto-generated titles</span>
-                </div>
-                <div className="flex items-center">
-                  <Sparkles className="w-5 h-5 mr-2" />
-                  <span>Optimized descriptions</span>
-                </div>
+              <h3 className="text-xl font-bold text-foreground mb-3">Quick Listings</h3>
+              <p className="text-muted-foreground">Post your items in seconds with our streamlined listing process. Photos, price, and description - that's all you need.</p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="bg-card rounded-xl p-8 border border-border hover:shadow-lg transition-shadow">
+              <div className="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-6">
+                <Users className="w-7 h-7 text-accent" />
               </div>
-              
-              <Button
-                as={Link}
-                to="/post-ad"
-                variant="primary"
-                size="lg"
-                className="bg-white text-primary-600 hover:bg-primary-50 font-semibold px-8 py-3 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200"
-                icon={<Sparkles size={20} />}
+              <h3 className="text-xl font-bold text-foreground mb-3">Connect Directly</h3>
+              <p className="text-muted-foreground">Chat with buyers or sellers in real-time. Negotiate prices and arrange meetups safely on our platform.</p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="bg-card rounded-xl p-8 border border-border hover:shadow-lg transition-shadow">
+              <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                <Shield className="w-7 h-7 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold text-foreground mb-3">Stay Safe</h3>
+              <p className="text-muted-foreground">Verified users, secure transactions, and protection policies ensure your peace of mind on every deal.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* All Featured Ads */}
+      {featuredAds.length > 0 && (
+        <div className="bg-white py-16 lg:py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center mb-12">
+              <div>
+                <h2 className="text-4xl lg:text-5xl font-bold text-foreground">Featured Listings</h2>
+                <p className="text-muted-foreground mt-2">Browse popular items trending right now</p>
+              </div>
+              <Link 
+                to="/featured"
+                className="hidden lg:flex items-center text-primary hover:text-primary/80 font-semibold transition-colors"
               >
-                Try AI Listing Now
+                View All
+                <ArrowRight size={20} className="ml-2" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {featuredAds.map((ad) => (
+                <div key={ad.id} className="hover:shadow-lg transition-shadow rounded-lg overflow-hidden">
+                  <AdCard ad={ad} />
+                </div>
+              ))}
+            </div>
+
+            <div className="flex lg:hidden justify-center mt-8">
+              <Button as={Link} to="/featured" variant="secondary">
+                View All Featured Listings
               </Button>
             </div>
           </div>
-
-          {/* Featured Ads Section */}
-          {featuredAds.length > 0 && (
-            <div className="mt-24">
-              <div className="backdrop-blur-xl bg-white/5 rounded-3xl p-4 sm:p-8 border border-white/10">
-                <h2 className="text-2xl font-bold mb-8 text-center">Featured Listings</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6">
-                  {featuredAds.map((ad) => (
-                    <div key={ad.id} className="transform hover:scale-105 transition-transform duration-300">
-                      <AdCard ad={ad} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
-      </div>
+      )}
     </div>
   );
 };
